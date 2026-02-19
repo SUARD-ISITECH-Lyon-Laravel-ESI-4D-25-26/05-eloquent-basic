@@ -1,122 +1,159 @@
-## Test Your Laravel Eloquent Basic Skills
+## Testez vos compétences Laravel — Eloquent : CRUD, scopes, observers
 
-This repository is a test for you: perform a set of tasks listed below, and fix the PHPUnit tests, which are currently intentionally failing.
+Ce dépôt est un exercice pratique : réalisez les tâches listées ci-dessous
+et faites passer les tests PHPUnit, qui échouent volontairement pour le moment.
 
-To test if all the functions work correctly, there are PHPUnit tests in `tests/Feature/EloquentTest.php` file.
+Pour vérifier votre progression, les tests se trouvent dans `tests/Feature/EloquentTest.php`.
 
-In the very beginning, if you run `php artisan test`, or `vendor/bin/phpunit`, all tests fail.
-Your task is to make those tests pass.
+Au départ, si vous exécutez `php artisan test`, tous les tests échouent.
+Votre objectif est de les faire passer un par un.
 
-## How to Submit Your Solution
-
-If you want to submit your solution, you should make a Pull Request to the `main` branch.
-It will automatically run the tests via GitHub Actions and will show you/me if the test pass.
-
-If you don't know how to make a Pull Request, [here's my video with instructions](https://www.youtube.com/watch?v=vEcT6JIFji0).
-
-This task is mostly self-served, so I'm not planning review or merge the Pull Requests. This test is for yourselves to assess your skills, the automated tests will be your answer if you passed the test :)
+> ⚠️ **Vous n'avez pas le droit de modifier les fichiers de tests.**
 
 
-## Questions / Problems?
+## Installation du projet
 
-If you're struggling with some tasks, or you have suggestions how to improve the task, create a GitHub Issue.
-
-Good luck!
-
----
-
-## Task 1. Model with Different Table Name.
-
-In `app/Models/Morningnews.php` file, change it so that the model would work with "morning_news" table, as it is created in the migrations.
-
-Test method `test_create_model_incorrect_table()`.
-
----
-
-## Task 2. Get Data List.
-
-In `app/Http/Controllers/UserController.php` file method `index()`, write Eloquent query to get 3 newest users with verified emails, ordered from newest to oldest. Transform this SQL query into Eloquent:
-
+```sh
+git clone <url-du-depot> projet
+cd projet
+cp .env.example .env  # Éditez vos variables d'environnement
+composer install
+php artisan key:generate
 ```
+
+Puis lancez `php artisan test` pour voir les erreurs à corriger.
+
+
+## Soumettre votre solution
+
+Créez une Pull Request (ou Merge Request) vers la branche `main`.
+
+---
+
+## Tâche 1. Model avec un nom de table personnalisé
+
+Dans le fichier `app/Models/Morningnews.php`, modifiez le model pour qu'il utilise
+la table `morning_news` (telle que définie dans la migration), et non la table
+par défaut que Laravel déduit du nom de la classe.
+
+Méthode de test : `test_create_model_incorrect_table()`.
+
+---
+
+## Tâche 2. Récupérer une liste filtrée et ordonnée
+
+Dans la méthode `index()` du fichier `app/Http/Controllers/UserController.php`,
+écrivez la requête Eloquent équivalente à ce SQL :
+
+```sql
 select * from users where email_verified_at is not null order by created_at desc limit 3
 ```
 
-Test method `test_get_filtered_list()`.
+Méthode de test : `test_get_filtered_list()`.
 
 ---
 
-## Task 3. Get a Single Record.
+## Tâche 3. Récupérer un enregistrement ou afficher une erreur 404
 
-In `app/Http/Controllers/UserController.php` file method `show($userId)`, fill in the `$user` value with finding the user by `users.id = $userId`. If the user is not found, show default Laravel 404 page. 
+Dans la méthode `show($userId)` du fichier `app/Http/Controllers/UserController.php`,
+trouvez l'utilisateur dont l'`id` correspond à `$userId`.
+Si l'utilisateur n'existe pas, affichez la page 404 par défaut de Laravel.
 
-Test method `test_find_user_or_show_404_page()`.
-
----
-
-## Task 4. Get a Single Record or Create a New Record.
-
-In `app/Http/Controllers/UserController.php` file method `check_create()`, find the user by name and email. If the user is not found, create it (with random password).
-
-Test method `test_check_or_create_user()`.
+Méthode de test : `test_find_user_or_show_404_page()`.
 
 ---
 
-## Task 5. Create a New Record.
+## Tâche 4. Trouver ou créer un enregistrement (firstOrCreate)
 
-In `app/Http/Controllers/ProjectController.php` file method `store()`, creating the project will fail. Fix the underlying issue, to make it work.
+Dans la méthode `check_create($name, $email)` du fichier `app/Http/Controllers/UserController.php`,
+trouvez un utilisateur par `$name` et `$email`.
+S'il n'existe pas, créez-le avec ces informations et un mot de passe aléatoire.
 
-Test method `test_create_project()`.
+Méthode de test : `test_check_or_create_user()`.
 
 ---
 
-## Task 6. Mass Update.
+## Tâche 5. Création d'un enregistrement (mass assignment)
 
-In `app/Http/Controllers/ProjectController.php` file method `mass_update()`, write the update SQL query as Eloquent statement.
+Dans la méthode `store()` du fichier `app/Http/Controllers/ProjectController.php`,
+la création du projet échoue. Trouvez et corrigez le problème sous-jacent dans le model.
 
-```
+Méthode de test : `test_create_project()`.
+
+---
+
+## Tâche 6. Mise à jour en masse (mass update)
+
+Dans la méthode `mass_update()` du fichier `app/Http/Controllers/ProjectController.php`,
+écrivez la requête Eloquent équivalente à ce SQL :
+
+```sql
 update projects set name = $request->new_name where name = $request->old_name
 ```
 
-Test method `test_mass_update_projects()`.
+Méthode de test : `test_mass_update_projects()`.
 
 ---
 
-## Task 7. Update or New Record.
+## Tâche 7. Mettre à jour ou créer un enregistrement (updateOrCreate)
 
-In `app/Http/Controllers/UserController.php` file method `check_update()`, find a user by $name and update it with $email. If not found, create a user with $name, $email and random password
+Dans la méthode `check_update($name, $email)` du fichier `app/Http/Controllers/UserController.php`,
+trouvez un utilisateur par `$name` et mettez à jour son email avec `$email`.
+S'il n'existe pas, créez-le avec `$name`, `$email` et un mot de passe aléatoire.
 
-Test method `test_check_or_update_user()`.
-
----
-
-## Task 8. Mass Delete Users.
-
-In `app/Http/Controllers/UserController.php` file method `destroy()`, delete all users by the array of `$request->users`
-
-Test method `test_mass_delete_users()`.
+Méthode de test : `test_check_or_update_user()`.
 
 ---
 
-## Task 9. Soft Deletes.
+## Tâche 8. Suppression en masse (mass delete)
 
-In `app/Http/Controllers/ProjectController.php` file method `destroy()`, change Eloquent statement to still return the soft-deleted records in the list of `$projects`
+Dans la méthode `destroy()` du fichier `app/Http/Controllers/UserController.php`,
+supprimez tous les utilisateurs dont les IDs sont présents dans `$request->users`
+(tableau d'IDs, ex. `[1, 2, 3]`).
 
-Test method `test_soft_delete_projects()`.
-
----
-
-## Task 10. Scopes with Filters.
-
-In `app/Http/Controllers/UserController.php` file method `only_active()`, make the main statement work and to filter records where email_verified_at is not null.
-
-Test method `test_active_users()`.
+Méthode de test : `test_mass_delete_users()`.
 
 ---
 
-## Task 11. Observers with New Record.
+## Tâche 9. Suppression logique (soft delete)
 
-In `app/Http/Controllers/ProjectController.php` file method `store_with_stats()`, create a separate Observer file with an event to perform a +1 in the stats table.
+Dans la méthode `destroy($projectId)` du fichier `app/Http/Controllers/ProjectController.php`,
+modifiez la requête Eloquent pour que la liste des projets inclue également
+les enregistrements supprimés via soft delete.
 
-Test method `test_insert_observer()`.
+Méthode de test : `test_soft_delete_projects()`.
 
 ---
+
+## Tâche 10. Scope de filtrage (Eloquent scope)
+
+Dans la méthode `only_active()` du fichier `app/Http/Controllers/UserController.php`,
+le scope `active()` est appelé mais n'existe pas encore.
+Créez ce scope dans le model `User` pour filtrer les utilisateurs
+dont le champ `email_verified_at` n'est pas null.
+
+Méthode de test : `test_active_users()`.
+
+---
+
+## Tâche 11. Observer Eloquent
+
+Dans la méthode `store_with_stats()` du fichier `app/Http/Controllers/ProjectController.php`,
+créez un Observer pour le model `Project`. Lors de la création d'un nouveau projet,
+l'observer doit incrémenter le champ `projects_count` dans la table `stats` :
+
+```sql
+update stats set projects_count = projects_count + 1
+```
+
+N'oubliez pas d'enregistrer l'observer dans un service provider.
+
+Méthode de test : `test_insert_observer()`.
+
+---
+
+## Questions / Problèmes ?
+
+Si vous rencontrez des difficultés ou avez des suggestions, créez une Issue.
+
+Bon courage !

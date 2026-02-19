@@ -13,7 +13,7 @@ class EloquentTest extends TestCase
 {
     use RefreshDatabase;
 
-    // TASK: Make the model Morningnews work with DB table "morning_news"
+    // TÂCHE : faites fonctionner le model Morningnews avec la table "morning_news"
     public function test_create_model_incorrect_table()
     {
         $article = ['title' => 'Something', 'news_text' => 'Something'];
@@ -22,7 +22,7 @@ class EloquentTest extends TestCase
         $this->assertDatabaseHas('morning_news', $article);
     }
 
-    // TASK: Write Eloquent query to return the newest 3 verified users
+    // TÂCHE : écrivez une requête Eloquent pour retourner les 3 utilisateurs vérifiés les plus récents
     public function test_get_filtered_list()
     {
         $user1 = User::factory()->create(['created_at' => now()->subMinutes(5)]);
@@ -33,13 +33,13 @@ class EloquentTest extends TestCase
 
         $response = $this->get('users');
 
-        // This one should be filtered by "email_verified_at is not null"
+        // Cet utilisateur doit être filtré car "email_verified_at is not null"
         $response->assertDontSee($user3->name);
 
-        // This one should be filtered out by "limit 3"
+        // Cet utilisateur doit être exclu par la limite "limit 3"
         $response->assertDontSee($user1->name);
 
-        // Do we have the correct order?
+        // L'ordre est-il correct ?
         $response->assertSee('1. ' . $user5->name);
         $response->assertSee('2. ' . $user4->name);
         $response->assertSee('3. ' . $user2->name); // not $user3
@@ -65,7 +65,7 @@ class EloquentTest extends TestCase
             'email' => 'john@john.com'
         ]);
 
-        // Same parameters - should NOT create a new user
+        // Mêmes paramètres — ne doit PAS créer un nouvel utilisateur
         $this->get('users/check/john/john@john.com');
         $this->assertDatabaseCount('users', 1);
     }
@@ -99,7 +99,7 @@ class EloquentTest extends TestCase
             'email' => 'john@john.com'
         ]);
 
-        // Same parameters - should NOT create a new user
+        // Mêmes paramètres — ne doit PAS créer un nouvel utilisateur
         $this->get('users/check_update/john/john2@john.com');
         $this->assertDatabaseHas('users', [
             'name' => 'john',

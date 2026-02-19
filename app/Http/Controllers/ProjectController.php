@@ -10,7 +10,7 @@ class ProjectController extends Controller
 {
     public function store(Request $request)
     {
-        // TASK: Currently this statement fails. Fix the underlying issue.
+        // TÂCHE : cette instruction échoue actuellement. Corrigez le problème sous-jacent.
         Project::create([
             'name' => $request->name
         ]);
@@ -20,12 +20,12 @@ class ProjectController extends Controller
 
     public function mass_update(Request $request)
     {
-        // TASK: Transform this SQL query into Eloquent
+        // TÂCHE : transformez cette requête SQL en Eloquent
         // update projects
         //   set name = $request->new_name
         //   where name = $request->old_name
 
-        // Insert Eloquent statement below
+        // Votre code ici
 
         return redirect('/')->with('success', 'Projects updated');
     }
@@ -34,7 +34,7 @@ class ProjectController extends Controller
     {
         Project::destroy($projectId);
 
-        // TASK: change this Eloquent statement to include the soft-deletes records
+        // TÂCHE : modifiez cette instruction Eloquent pour inclure les enregistrements soft-deleted
         $projects = Project::all();
 
         return view('projects.index', compact('projects'));
@@ -42,7 +42,7 @@ class ProjectController extends Controller
 
     public function store_with_stats(Request $request)
     {
-        // TASK: on creating a new project, create an Observer event to run SQL
+        // TÂCHE : lors de la création d'un nouveau projet, créez un Observer pour exécuter le SQL suivant :
         //   update stats set projects_count = projects_count + 1
         $project = new Project();
         $project->name = $request->name;

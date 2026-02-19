@@ -19,8 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// NOTICE: Not all the routes are logical and would exist in a real Laravel project
-// Some routes are just for the purpose of replicating some testing scenario
+// ⚠️ REMARQUE : toutes ces routes ne sont pas logiques et n'existeraient pas dans un vrai projet Laravel.
+// Certaines routes servent uniquement à reproduire des scénarios de test.
 
 Route::get('users', [UserController::class, 'index']);
 Route::get('users/active', [UserController::class, 'only_active']);
