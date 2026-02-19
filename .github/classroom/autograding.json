@@ -1,0 +1,114 @@
+{
+  "tests": [
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_create_model_incorrect_table",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_get_filtered_list",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_find_user_or_show_404_page",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_check_or_create_user",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_create_project",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_mass_update_projects",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_check_or_update_user",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_mass_delete_users",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_soft_delete_projects",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_active_users",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "Run PHPUnit tests",
+      "setup": "",
+      "run": "vendor/bin/phpunit --testdox --filter=test_insert_observer",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    }
+  ]
+}
